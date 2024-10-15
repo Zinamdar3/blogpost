@@ -1,11 +1,21 @@
-# Dockerfile
-FROM python:3.9-slim
+# Use the official Node.js image from Docker Hub
+FROM node:14
 
-WORKDIR /app
+# Set the working directory inside the container
+WORKDIR /usr/src/app
 
-COPY app.py .
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-RUN pip install Flask
+# Install dependencies
+RUN npm install
 
-CMD ["python", "app.py"]
+# Copy the rest of the app code
+COPY . .
+
+# Expose the application on port 3000
+EXPOSE 3000
+
+# Start the application
+CMD [ "node", "app.js" ]
 
